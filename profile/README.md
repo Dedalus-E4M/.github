@@ -1,1 +1,1 @@
-[Confluence documentation](https://e4m.atlassian.net/wiki/spaces/E4M/pages/3217489921/Tool+Github)
+[Confluence documentation](https://confluence.dedalus.com/spaces/E4M/pages/614251328/Tool+Github)
