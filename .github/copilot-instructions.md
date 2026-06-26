@@ -32,5 +32,3 @@ Make trade-offs explicit (perf, scalability, security). Clean architecture / DDD
 ## Language
 
 Shared docs and code in **English**. Healthcare domain terms kept in French (RCP, FINESS…).
-
-<!-- canary: hub-loaded-7Q -->
