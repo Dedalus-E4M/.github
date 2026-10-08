@@ -12,11 +12,20 @@ synchronous REST + PG LISTEN/NOTIFY (no broker) · GitHub Actions + ArgoCD.
 
 ## Non-negotiable constraints
 
-- **Healthcare**: personal health data — never log PII/PHI.
+- **Healthcare**: never log personal data or patient health data (PII/PHI). See safe logging below.
 - **Multi-tenant**: discriminator-column isolation, tenant passed via HTTP header.
 - **Explicit errors**: no silent failure; honor DTO/OpenAPI contracts.
 - **Forbidden**: MongoDB for a new service · any message broker · raw SQL (QueryDSL is mandatory) ·
   backend implementation before the TypeSpec contract · new backend framework without an ADR.
+
+## Safe logging
+
+- Exclude names, contact details, patient IDs, clinical records, passwords, tokens,
+  cookies, and API keys. Check request bodies and raw errors for these values before logging.
+- Keep useful error details and safe filenames, such as `agenda/rcp.json`. A filename,
+  path, or UUID is not sensitive by itself. Check what it contains or identifies.
+- Remove only sensitive values. State the risk or rule before removing other details.
+  Ask if unsure.
 
 ## Where the detail lives (do not duplicate here)
 
