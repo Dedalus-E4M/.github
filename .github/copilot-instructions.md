@@ -12,8 +12,7 @@ synchronous REST + PG LISTEN/NOTIFY (no broker) · GitHub Actions + ArgoCD.
 
 ## Non-negotiable constraints
 
-- **Healthcare**: never log personally identifiable information (PII) or personal health
-  information (PHI). Apply the safe-logging rules below; this is not a ban on useful diagnostics.
+- **Healthcare**: never log personal data or patient health data (PII/PHI). See safe logging below.
 - **Multi-tenant**: discriminator-column isolation, tenant passed via HTTP header.
 - **Explicit errors**: no silent failure; honor DTO/OpenAPI contracts.
 - **Forbidden**: MongoDB for a new service · any message broker · raw SQL (QueryDSL is mandatory) ·
@@ -21,26 +20,12 @@ synchronous REST + PG LISTEN/NOTIFY (no broker) · GitHub Actions + ArgoCD.
 
 ## Safe logging
 
-Protect sensitive values while preserving the information needed to diagnose failures.
-
-- **Exclude personal and health data**: names, contact details, dates of birth, patient
-  identifiers, diagnoses, treatments, clinical observations, and patient document contents.
-- **Exclude secrets**: passwords, access/refresh tokens, session cookies, API keys, and
-  authorization headers.
-- **Select safe fields** instead of dumping request/response bodies, decoded identity
-  claims, configuration objects, or raw errors that may contain the values above.
-- **Keep useful diagnostics**: operation, error code, status, timing, and known-safe
-  configuration filenames or paths, such as `agenda/rcp.json` and `pathway/pathways.json`.
-  A filename, path, or UUID is not sensitive merely because of its type or variable name;
-  assess what it identifies or contains. A patient identifier remains sensitive even if
-  it is a UUID.
-- **Redact the sensitive part, not all context**. User-supplied filenames, URL/query
-  values, and error messages can contain personal data or secrets; retain their safe
-  parts or use a known-safe resource name alongside the operation and status.
-- **Justify diagnostic removal with evidence**: identify the sensitive value or a
-  specific rule that requires its removal. Do not label harmless technical metadata a
-  security defect without evidence. If classification is unclear, keep known-safe
-  context and ask for clarification rather than impose blanket redaction.
+- Exclude names, contact details, patient IDs, clinical records, passwords, tokens,
+  cookies, and API keys. Check request bodies and raw errors for these values before logging.
+- Keep useful error details and safe filenames, such as `agenda/rcp.json`. A filename,
+  path, or UUID is not sensitive by itself. Check what it contains or identifies.
+- Remove only sensitive values. State the risk or rule before removing other details.
+  Ask if unsure.
 
 ## Where the detail lives (do not duplicate here)
 
